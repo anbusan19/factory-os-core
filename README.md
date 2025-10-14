@@ -1,73 +1,212 @@
-# Welcome to your Lovable project
+# 🏭 FactoryOS - Manufacturing Command Center
 
-## Project info
+A cutting-edge **Digital Twin Dashboard** for smart manufacturing, built with React, TypeScript, and modern web technologies.
 
-**URL**: https://lovable.dev/projects/c2bf5587-d479-483e-bb6b-8ea7f3423981
+## ✨ Features
 
-## How can I edit this code?
+### 📊 Real-Time Dashboard
+- Live operational metrics (machines, workers, orders, safety alerts)
+- Production vs. defects trend visualization
+- System events feed with Socket.IO updates
+- Animated status cards with glassmorphic design
 
-There are several ways of editing your application.
+### 🎮 Digital Twin Visualization
+- Interactive 3D factory floor using Three.js
+- Real-time machine status indicators (Active, Idle, Fault, Maintenance)
+- Hover tooltips with machine details
+- Color-coded status system with efficiency metrics
 
-**Use Lovable**
+### 📦 Procurement & Quality Management
+- Automated material order tracking
+- Quality inspection analytics with pass/fail ratios
+- Supplier management dashboard
+- Real-time procurement notifications
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c2bf5587-d479-483e-bb6b-8ea7f3423981) and start prompting.
+### 👷 Workforce Management
+- Worker-to-machine assignment tracking
+- Safety risk index monitoring
+- Shift management and worker status
+- Interactive reassignment capabilities
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🤖 AI Assistant (Cognitive Core)
+- Floating chat widget with natural language queries
+- Suggested query shortcuts
+- Real-time response simulation
+- Context-aware factory insights
 
-**Use your preferred IDE**
+## 🎨 Design System
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**Theme**: Industrial Dark Mode with Glassmorphic Elements
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Colors**:
+- **Primary** (Cyan): `#06b6d4` - Active states, primary actions
+- **Secondary** (Amber): `#f59e0b` - Warnings, secondary actions  
+- **Success** (Emerald): `#10b981` - Active machines, positive metrics
+- **Destructive** (Red): `#ef4444` - Faults, critical alerts
+- **Background**: Deep slate with glassmorphic cards
 
-Follow these steps:
+**Typography**: Space Grotesk - Technical, modern industrial aesthetic
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+**Effects**:
+- Backdrop blur and glass effects
+- Smooth transitions (cubic-bezier)
+- Glow effects on interactive elements
+- Animated status indicators
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🚀 Tech Stack
 
-# Step 3: Install the necessary dependencies.
-npm i
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Styling**: TailwindCSS + shadcn/ui
+- **3D Graphics**: Three.js + React Three Fiber
+- **Charts**: Recharts
+- **Animations**: Framer Motion
+- **State Management**: Zustand
+- **Real-time**: Socket.IO Client (simulated)
+- **Date Handling**: date-fns
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## 📦 Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+## 🏗️ Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/
+│   ├── ai/              # AI chat widget
+│   ├── dashboard/       # Dashboard components
+│   ├── layout/          # Layout components
+│   └── ui/              # shadcn UI components
+├── hooks/               # Custom React hooks
+├── pages/               # Route pages
+├── store/               # Zustand store
+└── lib/                 # Utilities
 
-**Use GitHub Codespaces**
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🎯 Key Components
 
-## What technologies are used for this project?
+### Dashboard Page
+- Overview of factory operations
+- Live metrics and KPIs
+- System events feed
+- Production analytics
 
-This project is built with:
+### Digital Twin Page  
+- 3D visualization of factory floor
+- Interactive machine cards
+- Real-time status updates
+- OrbitControls for navigation
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Procurement Page
+- Order tracking table
+- Quality inspection charts
+- Supplier performance metrics
+- Activity timeline
 
-## How can I deploy this project?
+### Workforce Page
+- Worker list and status
+- Machine allocation overview
+- Safety risk profiles
+- Assignment management
 
-Simply open [Lovable](https://lovable.dev/projects/c2bf5587-d479-483e-bb6b-8ea7f3423981) and click on Share -> Publish.
+## 🔄 Real-Time Updates
 
-## Can I connect a custom domain to my Lovable project?
+The app uses a simulated real-time system (`useRealtime` hook) that:
+- Generates system events every 15 seconds
+- Creates safety alerts every 30 seconds
+- Updates machine statuses every 20 seconds
+- Displays toast notifications for critical events
 
-Yes, you can!
+**Production Note**: Replace with actual Socket.IO connection:
+```typescript
+// Connect to your backend
+const socket = io('your-backend-url');
+socket.on('event', (data) => {
+  // Handle real-time updates
+});
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🤖 AI Assistant
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The Cognitive Core AI assistant is a floating chat widget that:
+- Responds to natural language queries
+- Provides factory insights
+- Suggests common queries
+- Simulates typing indicators
+
+**Production Note**: Replace with actual AI API endpoint:
+```typescript
+const response = await fetch('/cognitive-core/query', {
+  method: 'POST',
+  body: JSON.stringify({ prompt: userMessage })
+});
+```
+
+## 🎨 Customization
+
+### Colors
+Edit `src/index.css` to customize the color scheme:
+```css
+:root {
+  --primary: 189 95% 43%;     /* Cyan */
+  --secondary: 41 96% 51%;    /* Amber */
+  --success: 142 71% 45%;     /* Emerald */
+  --destructive: 0 84% 60%;   /* Red */
+}
+```
+
+### Animations
+Custom animations are defined in `src/index.css`:
+- `.glass` - Glassmorphic effect
+- `.glow-cyan` - Cyan glow effect
+- `.glow-pulse` - Pulsing glow animation
+- `.transition-smooth` - Smooth transitions
+
+## 📱 Responsive Design
+
+The dashboard is fully responsive with breakpoints:
+- Mobile: < 768px
+- Tablet: 768px - 1024px
+- Desktop: > 1024px
+
+## 🚦 Status Indicators
+
+- 🟢 **Active**: Machine is running normally
+- 🟡 **Idle**: Machine is ready but not in use
+- 🔴 **Fault**: Machine requires attention
+- 🟣 **Maintenance**: Machine is under maintenance
+
+## 🔐 Security Notes
+
+For production deployment:
+- Implement proper authentication
+- Secure WebSocket connections
+- Validate all user inputs
+- Use environment variables for API keys
+- Enable HTTPS
+
+## 📄 License
+
+This project is part of the Lovable platform.
+
+## 🤝 Contributing
+
+Built with [Lovable](https://lovable.dev) - The AI-powered web development platform.
+
+---
+
+**Made with ❤️ for the future of manufacturing**
