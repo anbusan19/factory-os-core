@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import DigitalTwin from "./pages/DigitalTwin";
 import Procurement from "./pages/Procurement";
 import Workforce from "./pages/Workforce";
+import FileViewer from "./pages/FileViewer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/digital-twin" element={<DigitalTwin />} />
           <Route path="/procurement" element={<Procurement />} />
           <Route path="/workforce" element={<Workforce />} />
+          <Route path="/file-viewer" element={<FileViewer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

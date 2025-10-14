@@ -20,7 +20,7 @@ const DigitalTwin = () => {
     <Layout>
       <div className="container mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 font-machina">Digital Twin - Factory Floor</h1>
+          <h1 className="text-4xl font-bold mb-2">Digital Twin - Factory Floor</h1>
           <p className="text-muted-foreground">Real-time 3D visualization of manufacturing operations</p>
         </div>
 

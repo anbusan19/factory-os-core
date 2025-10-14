@@ -63,6 +63,18 @@ export const Navbar = () => {
             >
               Workforce
             </NavLink>
+            <NavLink
+              to="/file-viewer"
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-lg transition-smooth ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-sidebar-accent'
+                }`
+              }
+            >
+              File Viewer
+            </NavLink>
           </div>
         </div>
       </nav>
