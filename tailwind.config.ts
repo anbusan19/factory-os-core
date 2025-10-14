@@ -68,6 +68,7 @@ export default {
       },
       fontFamily: {
         sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        machina: ['Familjen Grotesk', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

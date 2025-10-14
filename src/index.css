@@ -8,56 +8,56 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Industrial Dark Theme - FactoryOS */
-    --background: 222 47% 4%;
+    /* Pitch Black Theme - FactoryOS */
+    --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
-    --card: 224 25% 8%;
+    --card: 0 0% 5%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 224 25% 8%;
+    --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 189 95% 43%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 41 96% 51%;
-    --secondary-foreground: 222 47% 4%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 0%;
 
     --success: 142 71% 45%;
     --success-foreground: 0 0% 100%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 189 95% 43%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --warning: 41 96% 51%;
-    --warning-foreground: 222 47% 4%;
+    --warning-foreground: 0 0% 0%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 189 95% 43%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 100%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 224 25% 6%;
+    --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 189 95% 43%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 10%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 217 33% 12%;
-    --sidebar-ring: 189 95% 43%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 100%;
 
-    /* Custom industrial tokens */
+    /* Custom tokens */
     --glow-cyan: 189 95% 43%;
     --glow-amber: 41 96% 51%;
-    --glass-bg: 224 25% 8% / 0.6;
+    --glass-bg: 0 0% 5% / 0.6;
     --glass-border: 0 0% 100% / 0.1;
 
     /* Status colors */
