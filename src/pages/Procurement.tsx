@@ -67,6 +67,16 @@ const Procurement = () => {
     }
   };
 
+  const getPaymentBadge = (status: string) => {
+    // Simple derivation: delivered => paid, pending/in-transit => pending
+    switch (status) {
+      case 'delivered':
+        return <Badge className="bg-success text-success-foreground">Paid</Badge>;
+      default:
+        return <Badge variant="outline">Pending</Badge>;
+    }
+  };
+
   return (
     <Layout>
       <div className="container mx-auto px-6 py-8">
@@ -205,6 +215,7 @@ const Procurement = () => {
                 <TableHead>Material</TableHead>
                 <TableHead>Quantity</TableHead>
                 <TableHead>Delivery ETA</TableHead>
+              <TableHead>Payments</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -217,6 +228,7 @@ const Procurement = () => {
                   <TableCell>{order.material}</TableCell>
                   <TableCell>{order.quantity}</TableCell>
                   <TableCell>{format(order.deliveryEta, 'MMM dd, yyyy')}</TableCell>
+                <TableCell>{getPaymentBadge(order.status)}</TableCell>
                   <TableCell>{getStatusBadge(order.status)}</TableCell>
                 </TableRow>
               ))}

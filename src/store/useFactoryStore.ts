@@ -58,7 +58,8 @@ export interface FactoryOrder {
   totalPrice: number;
   leadTimeDays: number;
   createdAt: Date;
-  status: 'placed' | 'in-production' | 'completed' | 'cancelled';
+  status: 'placed' | 'in-transit' | 'out-for-delivery' | 'in-production' | 'completed' | 'cancelled';
+  paymentStatus?: 'paid' | 'pending' | 'not-paid';
 }
 
 interface FactoryState {
@@ -78,6 +79,7 @@ interface FactoryState {
   addProcurementOrder: (order: ProcurementOrder) => void;
   updateProcurementOrder: (id: string, updates: Partial<ProcurementOrder>) => void;
   addFactoryOrder: (order: FactoryOrder) => void;
+  updateFactoryOrder: (id: string, updates: Partial<FactoryOrder>) => void;
 }
 
 export const useFactoryStore = create<FactoryState>((set) => ({
@@ -126,4 +128,7 @@ export const useFactoryStore = create<FactoryState>((set) => ({
     procurementOrders: state.procurementOrders.map((o) => o.id === id ? { ...o, ...updates } : o)
   })),
   addFactoryOrder: (order) => set((state) => ({ factoryOrders: [order, ...state.factoryOrders] })),
+  updateFactoryOrder: (id, updates) => set((state) => ({
+    factoryOrders: state.factoryOrders.map((o) => o.id === id ? { ...o, ...updates } : o)
+  })),
 }));

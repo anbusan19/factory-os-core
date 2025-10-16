@@ -11,6 +11,7 @@ import Orders from "./pages/Orders";
 import Workforce from "./pages/Workforce";
 import FileViewer from "./pages/FileViewer";
 import NotFound from "./pages/NotFound";
+import Warehouse from "./pages/Warehouse";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/procurement" element={<Procurement />} />
           <Route path="/factory-options" element={<FactoryOptions />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/warehouse" element={<Warehouse />} />
           <Route path="/workforce" element={<Workforce />} />
           <Route path="/file-viewer" element={<FileViewer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
