@@ -54,6 +54,36 @@ const Procurement = () => {
 
   const COLORS = ['hsl(var(--success))', 'hsl(var(--destructive))'];
 
+  const getQualityDescription = (name: string) => {
+    switch (name) {
+      case 'Passed':
+        return 'Items that cleared inspection and meet quality criteria.';
+      case 'Failed':
+        return 'Items that did not meet required standards and need review.';
+      default:
+        return '';
+    }
+  };
+
+  const QualityTooltip = ({ active, payload, label }: any) => {
+    if (!active || !payload || !payload.length) return null;
+    const entry = payload[0];
+    const name = entry?.name ?? label;
+    const value = entry?.value ?? 0;
+    const percent = entry?.percent != null ? (entry.percent * 100).toFixed(1) : undefined;
+    const desc = getQualityDescription(name);
+    return (
+      <div className="rounded-md border bg-popover p-3 shadow-sm">
+        <div className="flex items-center justify-between mb-1">
+          <div className="font-medium">{name}</div>
+          {percent && <div className="text-xs text-muted-foreground">{percent}%</div>}
+        </div>
+        <div className="text-sm">Count: <span className="font-medium">{value}</span></div>
+        {desc && <div className="mt-2 text-xs text-muted-foreground">{desc}</div>}
+      </div>
+    );
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'delivered':
@@ -164,13 +194,7 @@ const Procurement = () => {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                  }}
-                />
+                <Tooltip content={<QualityTooltip />} wrapperStyle={{ outline: 'none' }} />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
