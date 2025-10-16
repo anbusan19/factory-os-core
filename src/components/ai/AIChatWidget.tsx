@@ -129,7 +129,7 @@ export const AIChatWidget = () => {
                 <p className="text-xs text-muted-foreground">Cognitive Core</p>
               </div>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="icon"
@@ -138,14 +138,24 @@ export const AIChatWidget = () => {
               >
                 <Minimize2 className="w-4 h-4" />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsOpen(false)}
-                className="h-8 w-8"
-              >
-                <X className="w-4 h-4" />
-              </Button>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsOpen(false)}
+                  className="h-8"
+                >
+                  Close
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsOpen(false)}
+                  className="h-8 w-8"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -204,7 +214,7 @@ export const AIChatWidget = () => {
 
               {/* Input */}
               <div className="p-4 border-t border-sidebar-border">
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
                   <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
@@ -212,8 +222,11 @@ export const AIChatWidget = () => {
                     placeholder="Ask me anything..."
                     className="flex-1"
                   />
-                  <Button onClick={handleSendMessage} size="icon">
+                  <Button onClick={handleSendMessage} size="icon" aria-label="Send message">
                     <Send className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" onClick={() => setIsOpen(false)} aria-label="Close chat">
+                    Close
                   </Button>
                 </div>
               </div>
