@@ -1,6 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Box, Cylinder, Sphere } from '@react-three/drei';
+import { Box, Cylinder, Sphere, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Conveyor Belt Component
@@ -72,13 +72,22 @@ export const RobotArm = ({ position }: { position: [number, number, number] }) =
 export const Machine = ({ 
   position, 
   color, 
-  status 
+  status,
+  machineData
 }: { 
   position: [number, number, number]; 
   color: string;
   status: 'active' | 'idle' | 'fault';
+  machineData?: {
+    id: string;
+    name: string;
+    temperature?: number;
+    efficiency?: number;
+    workerId?: string;
+  };
 }) => {
   const lightRef = useRef<THREE.PointLight>(null);
+  const [hovered, setHovered] = useState(false);
   
   useFrame((state) => {
     if (lightRef.current && status === 'active') {
@@ -99,8 +108,18 @@ export const Machine = ({
   return (
     <group position={position}>
       {/* Machine body */}
-      <Box args={[2, 1.5, 2]}>
-        <meshStandardMaterial color={color} />
+      <Box 
+        args={[2, 1.5, 2]}
+        onPointerOver={() => setHovered(true)}
+        onPointerOut={() => setHovered(false)}
+        onPointerEnter={() => setHovered(true)}
+        onPointerLeave={() => setHovered(false)}
+      >
+        <meshStandardMaterial 
+          color={hovered ? '#ffffff' : color} 
+          emissive={hovered ? '#ffffff' : '#000000'}
+          emissiveIntensity={hovered ? 0.2 : 0}
+        />
       </Box>
       {/* Status indicator */}
       <Sphere args={[0.2, 16, 16]} position={[0, 1, 0]}>
@@ -121,6 +140,82 @@ export const Machine = ({
       <Box args={[1.8, 0.3, 1.8]} position={[0, 0.9, 0]}>
         <meshStandardMaterial color="#0a0a0a" />
       </Box>
+      
+      {/* Tooltip */}
+      {hovered && machineData && (
+        <group position={[0, 3, 0]}>
+          {/* Tooltip background */}
+          <Box args={[4, 2, 0.1]} position={[0, 0, 0]}>
+            <meshStandardMaterial 
+              color="#000000" 
+              transparent 
+              opacity={0.8}
+            />
+          </Box>
+          {/* Tooltip border */}
+          <Box args={[4.1, 2.1, 0.11]} position={[0, 0, -0.01]}>
+            <meshStandardMaterial 
+              color={getStatusColor()} 
+              transparent 
+              opacity={0.6}
+            />
+          </Box>
+          {/* Machine name */}
+          <Text
+            position={[0, 0.5, 0.1]}
+            fontSize={0.3}
+            color="#ffffff"
+            anchorX="center"
+            anchorY="middle"
+          >
+            {machineData.name}
+          </Text>
+          {/* Machine ID */}
+          <Text
+            position={[0, 0.2, 0.1]}
+            fontSize={0.2}
+            color="#cccccc"
+            anchorX="center"
+            anchorY="middle"
+          >
+            ID: {machineData.id}
+          </Text>
+          {/* Status */}
+          <Text
+            position={[0, -0.1, 0.1]}
+            fontSize={0.25}
+            color={getStatusColor()}
+            anchorX="center"
+            anchorY="middle"
+          >
+            Status: {status.toUpperCase()}
+          </Text>
+          {/* Temperature */}
+          {machineData.temperature && (
+            <Text
+              position={[0, -0.4, 0.1]}
+              fontSize={0.2}
+              color="#ffffff"
+              anchorX="center"
+              anchorY="middle"
+            >
+              Temp: {machineData.temperature}°C
+            </Text>
+          )}
+          {/* Efficiency */}
+          {machineData.efficiency && (
+            <Text
+              position={[0, -0.7, 0.1]}
+              fontSize={0.2}
+              color="#ffffff"
+              anchorX="center"
+              anchorY="middle"
+            >
+              Efficiency: {machineData.efficiency}%
+            </Text>
+          )}
+        </group>
+      )}
     </group>
   );
 };
