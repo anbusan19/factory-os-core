@@ -1,7 +1,10 @@
 import { Layout } from '@/components/layout/Layout';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 import { useFactoryStore } from '@/store/useFactoryStore';
+import { useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Package, TrendingUp, AlertCircle } from 'lucide-react';
 import { format } from 'date-fns';
@@ -9,6 +12,40 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 
 const Procurement = () => {
   const procurementOrders = useFactoryStore((state) => state.procurementOrders);
+  const updateProcurementOrder = useFactoryStore((state) => state.updateProcurementOrder);
+  const navigate = useNavigate();
+
+  const allDelivered = procurementOrders.length > 0 && procurementOrders.every((o) => o.status === 'delivered');
+
+  // Auto-progress orders from pending -> in-transit -> delivered over time
+  useEffect(() => {
+    const timeouts: number[] = [];
+    procurementOrders.forEach((order, index) => {
+      if (order.status === 'pending') {
+        // move pending -> in-transit after 2s + stagger
+        const t1 = window.setTimeout(() => {
+          updateProcurementOrder(order.id, { status: 'in-transit' });
+        }, 2000 + index * 800);
+        timeouts.push(t1);
+
+        // then in-transit -> delivered after additional 4s
+        const t2 = window.setTimeout(() => {
+          updateProcurementOrder(order.id, { status: 'delivered' });
+        }, 2000 + index * 800 + 4000);
+        timeouts.push(t2);
+      } else if (order.status === 'in-transit') {
+        // in-transit -> delivered after 3s + stagger
+        const t = window.setTimeout(() => {
+          updateProcurementOrder(order.id, { status: 'delivered' });
+        }, 3000 + index * 800);
+        timeouts.push(t);
+      }
+    });
+
+    return () => {
+      timeouts.forEach((t) => window.clearTimeout(t));
+    };
+  }, []);
 
   const qualityData = [
     { name: 'Passed', value: 847 },
@@ -37,6 +74,23 @@ const Procurement = () => {
           <h1 className="text-4xl font-bold mb-2">Procurement & Quality</h1>
           <p className="text-muted-foreground">Material automation and inspection analytics</p>
         </div>
+
+        {allDelivered && (
+          <Card className="glass p-4 mb-8 border-success/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-2.5 h-2.5 rounded-full bg-success animate-pulse" />
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-success text-success-foreground hover:bg-success">Received</Badge>
+                  <span className="text-sm text-muted-foreground">All procurement orders have been delivered.</span>
+                </div>
+              </div>
+              <Button onClick={() => navigate('/factory-options')} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                Choose Factory
+              </Button>
+            </div>
+          </Card>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           <Card className="glass p-6">

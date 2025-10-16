@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import DigitalTwin from "./pages/DigitalTwin";
 import Procurement from "./pages/Procurement";
+import FactoryOptions from "./pages/FactoryOptions";
+import Orders from "./pages/Orders";
 import Workforce from "./pages/Workforce";
 import FileViewer from "./pages/FileViewer";
 import NotFound from "./pages/NotFound";
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/" element={<Dashboard />} />
           <Route path="/digital-twin" element={<DigitalTwin />} />
           <Route path="/procurement" element={<Procurement />} />
+          <Route path="/factory-options" element={<FactoryOptions />} />
+          <Route path="/orders" element={<Orders />} />
           <Route path="/workforce" element={<Workforce />} />
           <Route path="/file-viewer" element={<FileViewer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

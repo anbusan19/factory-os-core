@@ -48,12 +48,26 @@ export interface ProcurementOrder {
   status: 'pending' | 'in-transit' | 'delivered';
 }
 
+export interface FactoryOrder {
+  id: string;
+  factoryId: string;
+  factoryName: string;
+  area: string;
+  unitPrice: number;
+  quantity: number;
+  totalPrice: number;
+  leadTimeDays: number;
+  createdAt: Date;
+  status: 'placed' | 'in-production' | 'completed' | 'cancelled';
+}
+
 interface FactoryState {
   machines: Machine[];
   workers: Worker[];
   safetyAlerts: SafetyAlert[];
   systemEvents: SystemEvent[];
   procurementOrders: ProcurementOrder[];
+  factoryOrders: FactoryOrder[];
   
   addMachine: (machine: Machine) => void;
   updateMachine: (id: string, updates: Partial<Machine>) => void;
@@ -62,6 +76,8 @@ interface FactoryState {
   addSafetyAlert: (alert: SafetyAlert) => void;
   addSystemEvent: (event: SystemEvent) => void;
   addProcurementOrder: (order: ProcurementOrder) => void;
+  updateProcurementOrder: (id: string, updates: Partial<ProcurementOrder>) => void;
+  addFactoryOrder: (order: FactoryOrder) => void;
 }
 
 export const useFactoryStore = create<FactoryState>((set) => ({
@@ -93,6 +109,7 @@ export const useFactoryStore = create<FactoryState>((set) => ({
     { id: 'PO-002', supplier: 'Polymer Industries', partId: 'P-2234', material: 'PVC Resin', quantity: 200, deliveryEta: new Date(Date.now() + 86400000 * 5), status: 'pending' },
     { id: 'PO-003', supplier: 'Metal Works Inc', partId: 'P-8891', material: 'Aluminum Alloy', quantity: 350, deliveryEta: new Date(Date.now() + 86400000), status: 'in-transit' },
   ],
+  factoryOrders: [],
 
   addMachine: (machine) => set((state) => ({ machines: [...state.machines, machine] })),
   updateMachine: (id, updates) => set((state) => ({
@@ -105,4 +122,8 @@ export const useFactoryStore = create<FactoryState>((set) => ({
   addSafetyAlert: (alert) => set((state) => ({ safetyAlerts: [alert, ...state.safetyAlerts].slice(0, 10) })),
   addSystemEvent: (event) => set((state) => ({ systemEvents: [event, ...state.systemEvents].slice(0, 20) })),
   addProcurementOrder: (order) => set((state) => ({ procurementOrders: [...state.procurementOrders, order] })),
+  updateProcurementOrder: (id, updates) => set((state) => ({
+    procurementOrders: state.procurementOrders.map((o) => o.id === id ? { ...o, ...updates } : o)
+  })),
+  addFactoryOrder: (order) => set((state) => ({ factoryOrders: [order, ...state.factoryOrders] })),
 }));
