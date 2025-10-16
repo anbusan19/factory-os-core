@@ -88,6 +88,18 @@ export const Navbar = () => {
             >
               Orders
             </NavLink>
+            <NavLink
+              to="/warehouse"
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-lg transition-smooth ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-sidebar-accent'
+                }`
+              }
+            >
+              Warehouse
+            </NavLink>
           </div>
         </div>
       </nav>
