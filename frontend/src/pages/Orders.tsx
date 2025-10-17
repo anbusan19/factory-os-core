@@ -2,13 +2,17 @@ import { Layout } from '@/components/layout/Layout';
 import { Card } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { useFactoryStore } from '@/store/useFactoryStore';
+import { useApiStore } from '@/store/useApiStore';
 import { format, addDays } from 'date-fns';
 import { useEffect, useMemo, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 const Orders = () => {
-  const factoryOrders = useFactoryStore((s) => s.factoryOrders);
+  const { factoryOrders, fetchFactoryOrders, updateFactoryOrder, loading } = useApiStore();
+  
+  useEffect(() => {
+    fetchFactoryOrders();
+  }, [fetchFactoryOrders]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -37,7 +41,6 @@ const Orders = () => {
     }
   };
 
-  const updateFactoryOrder = useFactoryStore((s) => (s as any).updateFactoryOrder);
 
   // Auto-advance placed -> in-transit (10s) -> out-for-delivery (+20s) -> completed (+45s)
   useEffect(() => {

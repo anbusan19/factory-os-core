@@ -3,15 +3,19 @@ import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { useFactoryStore } from '@/store/useFactoryStore';
+import { useApiStore } from '@/store/useApiStore';
 import { format } from 'date-fns';
 import { useMemo, useState, useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 
 const Warehouse = () => {
-  const procurementOrders = useFactoryStore((s) => s.procurementOrders);
-  const factoryOrders = useFactoryStore((s) => s.factoryOrders);
+  const { procurementOrders, factoryOrders, fetchProcurementOrders, fetchFactoryOrders, loading } = useApiStore();
+  
+  useEffect(() => {
+    fetchProcurementOrders();
+    fetchFactoryOrders();
+  }, [fetchProcurementOrders, fetchFactoryOrders]);
 
   // Derive simple inventory views from existing data
   const rawMaterialInventory = procurementOrders.map((p) => ({
@@ -19,7 +23,7 @@ const Warehouse = () => {
     location: `Dock ${p.id.slice(-1)}`,
     item: `${p.material} (${p.partId})`,
     quantity: p.quantity,
-    eta: p.deliveryEta,
+    eta: new Date(p.deliveryEta),
     status: p.status,
   }));
 
@@ -28,7 +32,7 @@ const Warehouse = () => {
     location: o.area,
     item: `${o.factoryName} Order`,
     quantity: o.quantity,
-    eta: new Date(o.createdAt.getTime() + o.leadTimeDays * 86400000),
+    eta: new Date(new Date(o.createdAt).getTime() + o.leadTimeDays * 86400000),
     status: o.status,
   }));
 

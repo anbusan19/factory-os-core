@@ -2,17 +2,26 @@ import { Layout } from '@/components/layout/Layout';
 import { StatusCard } from '@/components/dashboard/StatusCard';
 import { EventsFeed } from '@/components/dashboard/EventsFeed';
 import { ProductionChart } from '@/components/dashboard/ProductionChart';
-import { useFactoryStore } from '@/store/useFactoryStore';
+import { useApiStore } from '@/store/useApiStore';
 import { useRealtime } from '@/hooks/useRealtime';
 import { Factory, Users, ShoppingCart, AlertTriangle } from 'lucide-react';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
   useRealtime(); // Enable real-time updates
   
-  const machines = useFactoryStore((state) => state.machines);
-  const workers = useFactoryStore((state) => state.workers);
-  const safetyAlerts = useFactoryStore((state) => state.safetyAlerts);
-  const procurementOrders = useFactoryStore((state) => state.procurementOrders);
+  const { 
+    machines, 
+    workers, 
+    safetyAlerts, 
+    procurementOrders, 
+    fetchAll, 
+    loading 
+  } = useApiStore();
+  
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
 
   const activeMachines = machines.filter((m) => m.status === 'active').length;
   const idleMachines = machines.filter((m) => m.status === 'idle').length;

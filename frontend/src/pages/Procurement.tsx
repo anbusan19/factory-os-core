@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { useFactoryStore } from '@/store/useFactoryStore';
+import { useApiStore } from '@/store/useApiStore';
 import { useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Package, TrendingUp, AlertCircle } from 'lucide-react';
@@ -11,9 +11,12 @@ import { format } from 'date-fns';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 const Procurement = () => {
-  const procurementOrders = useFactoryStore((state) => state.procurementOrders);
-  const updateProcurementOrder = useFactoryStore((state) => state.updateProcurementOrder);
+  const { procurementOrders, fetchProcurementOrders, updateProcurementOrder, loading } = useApiStore();
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    fetchProcurementOrders();
+  }, [fetchProcurementOrders]);
 
   const allDelivered = procurementOrders.length > 0 && procurementOrders.every((o) => o.status === 'delivered');
 

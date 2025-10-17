@@ -1,12 +1,17 @@
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useFactoryStore } from '@/store/useFactoryStore';
+import { useApiStore } from '@/store/useApiStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle, Info, AlertTriangle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import { useEffect } from 'react';
 
 export const EventsFeed = () => {
-  const systemEvents = useFactoryStore((state) => state.systemEvents);
+  const { systemEvents, fetchSystemEvents, loading } = useApiStore();
+  
+  useEffect(() => {
+    fetchSystemEvents();
+  }, [fetchSystemEvents]);
 
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
@@ -29,6 +34,20 @@ export const EventsFeed = () => {
         return 'border-l-primary bg-primary/5';
     }
   };
+
+  if (loading.events) {
+    return (
+      <Card className="glass p-6 h-[400px]">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold">System Events</h3>
+          <div className="w-2 h-2 rounded-full bg-muted animate-pulse" />
+        </div>
+        <div className="flex items-center justify-center h-[320px]">
+          <div className="text-muted-foreground">Loading events...</div>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="glass p-6 h-[400px]">

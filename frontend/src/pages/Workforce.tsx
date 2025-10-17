@@ -2,13 +2,18 @@ import { Layout } from '@/components/layout/Layout';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useFactoryStore } from '@/store/useFactoryStore';
+import { useApiStore } from '@/store/useApiStore';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Users, UserCheck, Coffee, AlertTriangle } from 'lucide-react';
+import { useEffect } from 'react';
 
 const Workforce = () => {
-  const workers = useFactoryStore((state) => state.workers);
-  const machines = useFactoryStore((state) => state.machines);
+  const { workers, machines, fetchWorkers, fetchMachines, loading } = useApiStore();
+  
+  useEffect(() => {
+    fetchWorkers();
+    fetchMachines();
+  }, [fetchWorkers, fetchMachines]);
 
   const activeWorkers = workers.filter((w) => w.status === 'active').length;
   const onBreak = workers.filter((w) => w.status === 'on-break').length;

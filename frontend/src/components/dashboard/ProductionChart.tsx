@@ -1,21 +1,30 @@
 import { Card } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-
-const data = [
-  { time: '00:00', production: 45, defects: 2 },
-  { time: '04:00', production: 52, defects: 1 },
-  { time: '08:00', production: 68, defects: 3 },
-  { time: '12:00', production: 85, defects: 2 },
-  { time: '16:00', production: 92, defects: 4 },
-  { time: '20:00', production: 78, defects: 2 },
-];
+import { useApiStore } from '@/store/useApiStore';
+import { useEffect } from 'react';
 
 export const ProductionChart = () => {
+  const { productionData, fetchProductionData, loading } = useApiStore();
+  
+  useEffect(() => {
+    fetchProductionData();
+  }, [fetchProductionData]);
+  if (loading.production) {
+    return (
+      <Card className="glass p-6">
+        <h3 className="text-lg font-semibold mb-6">Production vs. Defects Trend</h3>
+        <div className="flex items-center justify-center h-[300px]">
+          <div className="text-muted-foreground">Loading production data...</div>
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card className="glass p-6">
       <h3 className="text-lg font-semibold mb-6">Production vs. Defects Trend</h3>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
+        <LineChart data={productionData}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis 
             dataKey="time" 
