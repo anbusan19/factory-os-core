@@ -11,6 +11,7 @@ import workerRoutes from './routes/workers.js';
 import orderRoutes from './routes/orders.js';
 import alertRoutes from './routes/alerts.js';
 import productionRoutes from './routes/production.js';
+import qualityControlRoutes from './routes/qualityControl.js';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","https://factoryos.vercel.app"],
     methods: ["GET", "POST"]
   }
 });
@@ -38,6 +39,7 @@ app.use('/api/workers', workerRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/alerts', alertRoutes);
 app.use('/api/production', productionRoutes);
+app.use('/api/quality-control', qualityControlRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

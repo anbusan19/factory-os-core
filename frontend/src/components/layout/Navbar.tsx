@@ -77,6 +77,18 @@ export const Navbar = () => {
               File Viewer
             </NavLink>
             <NavLink
+              to="/quality-control"
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-lg transition-smooth ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-sidebar-accent'
+                }`
+              }
+            >
+              Quality Control
+            </NavLink>
+            <NavLink
               to="/orders"
               className={({ isActive }) =>
                 `px-4 py-2 rounded-lg transition-smooth ${

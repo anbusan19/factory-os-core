@@ -112,6 +112,17 @@ export const productionApi = {
   }),
 };
 
+// Quality Control API
+export const qualityControlApi = {
+  detectDefects: (formData: FormData) => {
+    return fetch(`${API_BASE_URL}/quality-control/detect`, {
+      method: 'POST',
+      body: formData,
+    });
+  },
+  checkHealth: () => apiCall<{ status: string; checks: any; timestamp: string }>('/quality-control/health'),
+};
+
 // Health check
 export const healthApi = {
   check: () => apiCall<{ status: string; timestamp: string }>('/health'),
