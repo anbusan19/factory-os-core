@@ -136,7 +136,7 @@ FactoryOS transforms traditional manufacturing operations into an intelligent, d
    ```
 
 6. **Access the application**
-   - Frontend: http://localhost:5173
+   - Frontend: http://localhost:8080
    - Backend API: http://localhost:3001
    - API Documentation: http://localhost:3001/api-docs
 
@@ -543,7 +543,7 @@ npm install
 ```bash
 # Solution: Update CORS configuration in server.js
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-domain.com'],
+  origin: ['http://localhost:8080', 'https://factoryos.vercel.app'],
   credentials: true
 }));
 ```

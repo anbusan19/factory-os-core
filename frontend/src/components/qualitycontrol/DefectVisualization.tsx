@@ -81,7 +81,7 @@ export const DefectVisualization = ({ imageUrl, results, className }: DefectVisu
           {/* Image with Defect Overlays */}
           <div className="relative">
             <img
-              src={results.original_image ? `http://localhost:3001${results.original_image}` : imageUrl}
+              src={results.original_image ? `https://api-factoryos.vercel.app/${results.original_image}` : imageUrl}
               alt="Analysis result"
               className="w-full h-auto max-h-96 object-contain rounded-lg border"
             />

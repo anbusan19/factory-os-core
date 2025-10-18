@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = 'https://api-factoryos.vercel.app';
 
 // Generic API call function
 async function apiCall<T>(endpoint: string, options: RequestInit = {}): Promise<T> {

@@ -7,6 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
+    "build": "echo 'No build step required for Vercel'",
+    "vercel-build": "echo 'No build step required for Vercel'",
     "seed": "node scripts/seedData.js",
     "seed:new": "node scripts/insertSyntheticData.js",
     "seed:scenarios": "node scripts/generateDataScenarios.js",
